@@ -1,0 +1,103 @@
+Snipplr API PHP Library
+
+A small library that allows interaction with Snipplr's API. Designed to be used in PHP projects or as a CakePHP vendor. When using this library its highly recommended that you cache your results, visit CakePHP Cache page: http://book.cakephp.org/view/767/Cache-write
+
+QUIRKS
+----------------------------------------------------------------------------------------
+1. In getAll method: Multiple tags don't seem to work in the Snipplr API. Only the last tag will be used.
+2. In getAll method: Limit of 0 or 1 appears to return all snippets (ie, not limited)
+
+
+USAGE
+----------------------------------------------------------------------------------------
+
+CakePHP:
+App::import('Vendor', 'SnipplrCore', array('file' => 'snipplr-api-php'.DS.'snipplr.core.php'));
+$SnipplrCore = new SnipplrCore();
+$snippet = $SnipplrCore->get('18153');
+$snippets = $SnipplrCore->getAll();
+$languages = $SnipplrCore->getAllLanguages();
+
+PHP:
+require_once "snipplr-api-php".DIRECTORY_SEPARATOR."snipplr.core.php";
+$SnipplrCore = new SnipplrCore();
+$snippet = $SnipplrCore->get('18153');
+$snippets = $SnipplrCore->getAll();
+$languages = $SnipplrCore->getAllLanguages();
+
+
+OUTPUT
+----------------------------------------------------------------------------------------
+
+Method Call: get('18153');
+Example Output:
+  Array
+  (
+    [id] => 18153
+    [user_id] => 11806
+    [username] => benjaminpearson
+    [title] => CakePHP highlight active menu item for page
+    [language] => Other
+    [comment] =>
+    [created] => 2009-08-11 00:35:14
+    [updated] => 2009-11-14 15:56:18
+    [source] => <ul>
+  	<li class="<?php if($this->viewVars['page'] == 'home') { echo 'active'; } ?>"><?php echo $html->link('Home', '/') ?></li>
+  </ul>
+    [tags] => Array
+      (
+        [0] => textmate
+        [1] => cakephp
+      )
+    [snipplr_url] => http://snipplr.com/view/18153/cakephp-highlight-active-menu-item-for-page
+  )
+
+
+Method Call: getAll();
+Example Output:
+  Array
+  (
+    [0] => Array
+      (
+        [id] => 22696
+        [title] => Sinatra Ajax Layout
+        [updated] => Array
+          (
+            [datetime] => 20091107T07:47:12
+            [timezone] => -05:00 EST
+          )
+        [private] => 0
+        [favourite] => 0
+      )
+
+    [1] => Array
+      (
+        [id] => 22385
+        [title] => jQuery Log Function
+        [updated] => Array
+          (
+            [datetime] => 20091103T08:12:37
+            [timezone] => -05:00 EST
+          )
+        [private] => 0
+        [favourite] => 0
+      )
+    ..etc
+  )
+
+Method Call: getAllLanguages();
+Example Output:
+  Array
+  (
+    [0] => Array
+      (
+        [slug] => actionscript
+        [name] => ActionScript
+      )
+    [1] => Array
+      (
+        [slug] => actionscript-3
+        [name] => ActionScript 3
+      )
+    ...etc
+  )
